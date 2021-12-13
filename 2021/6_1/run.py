@@ -1,4 +1,4 @@
-cycles = 80
+cycles = 120
 # read inputTest.txt and return array of values split by comma
 def readFile():
     with open("input.txt", "r") as f:
@@ -37,7 +37,7 @@ for i in range(len(startFishs)):
     fishs.append(Fish(int(startFishs[i])))
 
 for i in range(cycles):
-    # print("Cycle: " + str(i))
+    print("Cycle: " + str(i))
     # for cycles go through all fishs and update their age
     for k in range(len(fishs)):
         fishs[k].ageFish()
