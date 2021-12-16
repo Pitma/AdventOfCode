@@ -175,9 +175,10 @@ cython_debug/
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
-!.vscode/launch.json
+#!.vscode/launch.json
 !.vscode/extensions.json
 *.code-workspace
+.launch.json
 
 # Local History for Visual Studio Code
 .history/
@@ -186,6 +187,8 @@ cython_debug/
 # Ignore all local history of files
 .history
 .ionide
+
+.pytest_cache
 
 # Support for Project snippet scope
 !.vscode/*.code-snippets
