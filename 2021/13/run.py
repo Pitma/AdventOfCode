@@ -78,7 +78,7 @@ def replace_zeros(matrix):
     for i in range(len(matrix)):
         for j in range(len(matrix[i])):
             if matrix[i][j] == 0:
-                matrix[i][j] = "."
+                matrix[i][j] = " "
     return matrix
 
 
@@ -90,12 +90,16 @@ def print_matrix(matrix):
         print()
 
 
-print("---")
 for command in commands:
     matrix = fold_matrix(matrix, command[0], command[1])
     matrix = delete_rows_and_columns(matrix, command[0], command[1])
-print("---")
+
 matrix = replace_zeros(matrix)
+print(
+    "--------------------------------------------------------------------------------"
+)
 print_matrix(matrix)
+print(
+    "--------------------------------------------------------------------------------"
+)
 print(count_ones(matrix))
-print(commands)
