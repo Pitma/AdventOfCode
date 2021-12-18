@@ -2,10 +2,10 @@ from collections import defaultdict, Counter
 
 file = "inputTest.txt"
 
-start = "NNCB"
+start = "NN"
 # start = "KKOSPHCNOCHHHSPOBKVF"
 
-steps = 20
+steps = 25
 
 poly = defaultdict(list)
 
