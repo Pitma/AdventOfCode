@@ -7,15 +7,17 @@ letters = ChainMap(lettersLow,lettersHigh)
 input = file_data.split("\n")
 priority = 0
 
-print("Länge: ", len(input))
-amount = len(input)
-for i in range(0,amount-2,3):
-    for char in input[i]:
-        if  input[i].count(char)>0 and input[i+1].count(char)>0 and input[i+2].count(char)>0:
-            priority += letters.get(char)
-            break  
+for line in input:
+    part1 = slice(0,len(line)//2)
+    part2 = slice(len(line)//2,len(line))
+    for char in line[part1]:
+       count = line[part2].count(char)
+       if count>0:
+        priority += letters.get(char)
+        print(priority)
+        break
 
-print("Final :",priority)
+print(priority)
 
 
 
