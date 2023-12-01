@@ -2,7 +2,6 @@
 # Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,python,windows,macos
 # Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,python,windows,macos
 
-/my_input.py
 ### macOS ###
 # General
 .DS_Store
@@ -220,3 +219,4 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,python,windows,macos
+my_input.py
