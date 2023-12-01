@@ -1,4 +1,4 @@
-#used the great idea of https://github.com/jonathanpaulson
+#used the great idea by https://github.com/jonathanpaulson
 
 #!/usr/bin/python3
 import argparse
