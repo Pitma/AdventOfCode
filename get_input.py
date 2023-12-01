@@ -19,7 +19,7 @@ import requests
 # 6) Grab the value for session. Fill it in.
 SESSION = '<FILL_ME_IN>'
 
-useragent = 'https://github.com/Pitma/AdventOfCode/blob/master/get_input.py by patrickmainka@gmail.com'
+useragent = 'https://github.com/Pitma/AdventOfCode/blob/main/get_input.py by patrickmainka@gmail.com'
 parser = argparse.ArgumentParser(description='Read input')
 parser.add_argument('--year', type=int, default=2022)
 parser.add_argument('--day', type=int, default=1)
