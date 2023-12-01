@@ -2,6 +2,7 @@
 # Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,python,windows,macos
 # Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,python,windows,macos
 
+get_input.py
 ### macOS ###
 # General
 .DS_Store
