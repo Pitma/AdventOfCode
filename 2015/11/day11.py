@@ -4,47 +4,88 @@ import numpy as np
 isTest = False
 
 if isTest:
-    file = open("sample.txt","r")
+    password = 'abcdefgh'
 else:
-    file = open("input.txt","r")
+    #password = 'hxbxwxba' #part1
+    password = 'hxbxxyzz' #part2
+testResult1 = 'abcdffaa'
+isValid = False
 
-file_data = file.read().split("\n")
+def generiere_array():
+    alle_kleinbuchstaben = [chr(ord('a') + i) for i in range(26)]
+    no_i_l = [buchstabe for buchstabe in alle_kleinbuchstaben]# if buchstabe not in ('i', 'l','o')]
 
-games = []
-for line in file_data:
-    games.append(line.split(":")[1])
+    return no_i_l
 
-testResult1 = 8
-testResult2 = 2286
+validLetters = generiere_array()
 
-colors = ["red","green", "blue"]
-max = [12,13,14]
+def nextPassword(oldPassword):
+    
+    done = False
+    oldList = [*oldPassword]
+    pwLength = len(oldList)
+    currPos = 1
+    
+    for i in range(0,len(oldList)-1):
+         if oldList[i] in ('i','l','o'):
+             oldList[i] = chr(ord(oldList[i])+1)
+             for a in range(i+1,len(oldList)-1):
+                 oldList[a] = 'a'
+             break
+
+    while not done:
+        pos = pwLength - currPos
+        if(oldList[pos] == 'z'):
+            oldList[pos] = 'a'
+            currPos+=1
+        else:
+            oldList[pos] = validLetters[validLetters.index(oldList[pos])+1]
+            done = True
+    
+    return ''.join(oldList)
+
+def validatePassword(password):
+    isValid = False
+    
+    cnt = 0
+    for i in range(0,len(password)-3):
+        if(ord(password[i])+1 == ord(password[i+1])):
+           #print("passed 1")
+           if(ord(password[i+1])+1 == ord(password[i+2])):
+               #print("passed 2") 
+               cnt += 1
+               #print("Valid abc")
+               break
+    found = []
+    for i in range(0,len(password)-1):
+         if(ord(password[i]) == ord(password[i+1]) and password[i] not in found):
+             cnt += 1
+             #print("Valid bb", cnt)
+             found.append(password[i])
+    # print(password[i],password[i+1])
+    # print(found)
+    # print(password)
+    # print(cnt)
+    # if password == 'ghjaabcc':
+    #     isValid = True
+    if(cnt>2 and len(found) > 1):
+        isValid = True
+    #print(isValid)
+
+    return isValid  
+
+    
+
 
 def solvePartI(): 
-    cnt = 1
-    sum = 0
-    for game in games:
-        isGood=True
-        for color in colors:
-            pulls = re.findall("[0-9]+."+color,game)
-            colorsMax = 0
-            for pull in pulls:
-                amount=re.findall("\d+",pull)
-                if(max[colors.index(color)] < int(amount[0])):
-                    #print("Leider zu Hoch im Game",cnt,"Pull",pull,"Max Wert",max[colors.index(color)])
-                    isGood =False
-                    break 
-        if isGood:
-            sum +=cnt
-        cnt+=1
-
-    if isTest:
-        if sum == testResult1:
-            print("Result Part I",sum)
-        else: 
-            print("ERROR Part I is not correct")
-    else:
-        print("Result Part I",sum)
+    valid = False
+    newPassword = password
+    while not valid:
+        newPassword = nextPassword(newPassword)
+        valid = validatePassword(newPassword)
+    
+    print("Ergebnis", newPassword)
+        
 
 def solvePartII(): 
     cnt = 0
@@ -78,7 +119,7 @@ def solvePartII():
         print("Result part II",np.sum(gameResults))
 
 solvePartI()
-solvePartII()
+
 
 
 
