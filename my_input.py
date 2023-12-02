@@ -22,8 +22,8 @@ def download_and_save_input(year, day, session, user_agent, filename):
 
 # Setze deine Werte hier ein
 year = 2023
-day = 1
-session = '<FILL_HERE>'
+day = 2
+session = '53616c7465645f5f7180b3b4802ccbff114b40e4329501dedabaec68fe2e499d2bee8fe97706f2a67c2288084d6386d7e681d10862ecd54147b960d270e0f1e5'
 user_agent = 'https://github.com/Pitma/AdventOfCode/blob/main/get_input.py by patrickmainka@gmail.com'
 output_filename = 'input.txt'
 
