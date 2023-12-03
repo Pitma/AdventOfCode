@@ -2,7 +2,6 @@
 # from itertools import *
 # from math import *
 #from submit_answer import submit_answer
-import collections
 from collections import defaultdict
 import numpy as np
 import re
@@ -37,50 +36,53 @@ def solve(input_string: str) -> int or str:
     A = input_string
     N = len(A)
     print("N =", N)
-    print(A[:10])
-
+    #print(A[:10])
     total_sum = 0
-    for row_index, line in enumerate(A):
-        for match in re.finditer(r"\d+", line):
-            start, end = match.start() - 1, match.end()
-            nearby_indices = [
-                (row_index, start),
-                (row_index, end),
-                *[(row_index - 1, col) for col in range(start, end + 1)],
-                *[(row_index + 1, col) for col in range(start, end + 1)]
-            ]
-
-            valid_indices = filter(lambda idx: 0 <= idx[0] < len(A) and 0 <= idx[1] < len(A[idx[0]]) and A[idx[0]][idx[1]] != ".", nearby_indices)
-           
-            count = sum(1 for _ in valid_indices)
-            print(count)
-            if count > 0:
-                total_sum += int(match.group())
-    if LEVEL == 1:
-        return total_sum
-    
-    total_sum = 0
-
     adjacent_numbers = defaultdict(list)
+    if LEVEL == 1:
 
-    # Durchlaufe jede Zeile in den Zeilen
-    for i, line in enumerate(A):
-        # Suche nach aufeinanderfolgenden Zahlen in der Zeile
-        for match in re.finditer(r"\d+", line):
-            # Berechne Indizes rund um die gefundene Zahl
-            indices = [(i, match.start() - 1), (i, match.end())]
-            indices += [(i - 1, j) for j in range(match.start() - 1, match.end() + 1)]
-            indices += [(i + 1, j) for j in range(match.start() - 1, match.end() + 1)]
+        for row_index, line in enumerate(A):
+            for match in re.finditer(r"\d+", line):
+                start, end = match.start() - 1, match.end()
+                nearby_indices = [
+                    (row_index, start),
+                    (row_index, end),
+                    *[(row_index - 1, col) for col in range(start, end + 1)],
+                    *[(row_index + 1, col) for col in range(start, end + 1)]
+                ]
 
-            # Überprüfe die Gültigkeit der Indizes und füge die Zahl der Liste hinzu
-            for a, b in indices:
-                if 0 <= a < len(A) and 0 <= b < len(A[a]) and A[a][b] != ".":
-                    adjacent_numbers[a, b].append(match.group())
+                valid_indices = filter(lambda idx: 0 <= idx[0] < len(A) and 0 <= idx[1] < len(A[idx[0]]) and A[idx[0]][idx[1]] != ".", nearby_indices)
+            
+                count = sum(1 for _ in valid_indices)
 
-    # Berechne die Summe der Produkte der benachbarten Zahlen
-    total_sum = sum(int(x[0]) * int(x[1]) for x in adjacent_numbers.values() if len(x) == 2)
+                if count > 0:
+                    total_sum += int(match.group())
+        
+        return total_sum
+    else:
+        
+        # Durchlaufe jede Zeile in den Zeilen
+        for row_index, line in enumerate(A):
+            # Suche nach aufeinanderfolgenden Zahlen in der Zeile
+            for match in re.finditer(r"\d+", line):
+                # Berechne Indizes rund um die gefundene Zahl
+                start, end = match.start() - 1, match.end()
+                nearby_indices = [
+                    (row_index, start),
+                    (row_index, end),
+                    *[(row_index - 1, col) for col in range(start, end + 1)],
+                    *[(row_index + 1, col) for col in range(start, end + 1)]
+                ]
 
-    return total_sum
+                # Überprüfe die Gültigkeit der Indizes und füge die Zahl der Liste hinzu
+                for a, b in nearby_indices:
+                    if 0 <= a < len(A) and 0 <= b < len(A[a]) and A[a][b] != ".":
+                        adjacent_numbers[a, b].append(match.group())
+
+        # Berechne die Summe der Produkte der benachbarten Zahlen
+        total_sum = sum(int(x[0]) * int(x[1]) for x in adjacent_numbers.values() if len(x) == 2)
+
+        return total_sum
 
 
 
