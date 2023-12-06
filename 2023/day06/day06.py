@@ -58,6 +58,7 @@ def main():
     print("Answer for sample:", sample_answer)
     assert sample_answer == SAMPLE_ANSWER and sample_answer is not None, f"Got {sample_answer} instead of {SAMPLE_ANSWER}"
     #return
+    # Day 06 Part 2 I changed the input accordingly
     with open("input.txt") as input_file:
         inp = input_file.read().strip('\n')
     answer = solve(inp)
