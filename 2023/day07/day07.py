@@ -72,7 +72,6 @@ def solve(input_string: str) -> int or str:
 
     print("Part 1:", part_1)
 
-
     # Solve part 2.
     part_2 = 0
     for i, (hand, bid) in enumerate(sorted(hands, key=lambda h: (rank(h[0], part_2=True), tiebreak(h[0], part_2=True))), start=1):
