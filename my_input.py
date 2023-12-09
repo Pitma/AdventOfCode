@@ -1,4 +1,11 @@
 import requests
+import time
+from datetime import datetime, timedelta
+from pytz import timezone, utc
+
+# Function to get current time EST
+def est_now() -> datetime:
+    return datetime.now(tz=utc).astimezone(timezone("US/Eastern"))
 
 # Funktion zum Herunterladen des Inhalts und Speichern in einer Datei
 def download_and_save_input(year, day, session, user_agent, filename):
@@ -16,17 +23,22 @@ def download_and_save_input(year, day, session, user_agent, filename):
         # Inhalt in Datei schreiben
         with open(filename, 'w') as file:
             file.write(response.text)
+        with open(f'{year}/day{str(day).zfill(2)}/sample.txt', 'w') as file:
+            file.write('')
         print(f'Download erfolgreich. Inhalt wurde in {filename} gespeichert.')
     else:
         print(f'Fehler beim Herunterladen. Statuscode: {response.status_code}')
+
+    
 with open(".token") as token:
     cookies =  token.read().strip()
+    
 # Setze deine Werte hier ein
 year = 2023
-day = 7
+day = 9
 session = cookies
 user_agent = 'https://github.com/Pitma/AdventOfCode/blob/main/get_input.py by patrickmainka@gmail.com'
-output_filename = 'input.txt'
+output_filename = f'{year}/day{str(day).zfill(2)}/input.txt'
 
 # Funktion aufrufen
 download_and_save_input(year, day, session, user_agent, output_filename)
