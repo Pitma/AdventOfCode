@@ -17,7 +17,7 @@ SAMPLE_ANSWER = SAMPLE_ANSWERS[LEVEL - 1]
 def seq(ints):
     # Überprüfe, ob alle Elemente in der Liste ints gleich null sind
     if all(ints == 0 for ints in ints):
-        return 0  # Wenn ja, gebe 0 zurück
+        return 0
     # Berechne die Paarweisen Differenzen der Elemente in ints
     diffs = [b - a for a, b in pairwise(ints)]
     
