@@ -44,7 +44,7 @@ def solve(input_string: str) -> int or str:
     
     #Part 2
     occurrences = []
-    for num in first_numbers:  # Verwende set() um jede Zahl nur einmal zu prüfen
+    for num in first_numbers:
         count = second_numbers.count(num)
         occurrences.append(count * num)
 
