@@ -34,8 +34,8 @@ with open(".token") as token:
     cookies =  token.read().strip()
     
 # Setze deine Werte hier ein
-year = 2023
-day = 9
+year = 2024
+day = 1
 session = cookies
 user_agent = 'https://github.com/Pitma/AdventOfCode/blob/main/get_input.py by patrickmainka@gmail.com'
 output_filename = f'{year}/day{str(day).zfill(2)}/input.txt'
