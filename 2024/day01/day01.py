@@ -3,8 +3,6 @@
 # from math import *
 #from submit_answer import submit_answer
 
-
-
 #      N   E   S   W
 chr = [-1, 0,  1,  0, -1, -1,  1,  1]
 chc = [0,  1,  0, -1, -1,  1, -1,  1]
