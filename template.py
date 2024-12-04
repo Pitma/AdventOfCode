@@ -52,9 +52,9 @@ class AoCSolver:
         return Path(filename).read_text().strip()
 
 def main():
-    solver = AoCSolver(level=1)  # Change level as needed
+    solver = AoCSolver(level=1)  # Change level
     
-    # Test with sample input
+    # Test
     sample_input = solver.read_file("sample.txt")
     sample_answer = solver.solve(sample_input)
     expected = solver.sample_answers[solver.level]
@@ -62,7 +62,7 @@ def main():
     print(f"Sample answer: {sample_answer}")
     assert sample_answer == expected, f"Expected {expected}, got {sample_answer}"
     
-    # Solve actual input
+    # Solve
     input_data = solver.read_file("input.txt")
     answer = solver.solve(input_data)
     print(f"Answer: {answer}")
