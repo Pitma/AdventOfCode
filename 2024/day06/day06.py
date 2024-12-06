@@ -1,6 +1,6 @@
 # template.py
 from collections import defaultdict, deque, Counter
-from typing import Union, List, Dict, Any
+from typing import Union, List, Dict, Any, Tuple
 from pathlib import Path
 import time
 
@@ -37,90 +37,68 @@ class AoCSolver:
         return input_str
 
 
-    def find_starting_point_and_direction(self,room):
-        for i in (range(len(room))):
-            for j in (range(len(room[i]))):
-                if room[i][j] not in ['.','#','O']:
-                    return [i,j],room[i][j]
+    def find_starting_point_and_direction(self, room: List[List[str]]) -> Tuple[List[int], str]:
+        for i, row in enumerate(room):
+            for j, cell in enumerate(row):
+                if cell not in '.#O':
+                    return [i, j], cell
+        raise ValueError("No starting point found in room")
 
-    def find_path(self, data: Any):
+    def find_path(self, data: List[List[str]]) -> Tuple[List[List[int]], bool]:
+        position, curr_direction = self.find_starting_point_and_direction(data)
         visited = []
-        rows = len(data)
-        cols = len(data[0])
-        isLoop = False
         save_point = []
-
-        position,curr_direction = AoCSolver.find_starting_point_and_direction(self, data)
-
-        def is_valid_position(x, y):
-            return 0 <= x < rows and 0 <= y < cols
+        start_time = time.monotonic()
         
-        def turn_right(curr_direction):
-            return self.next_direction[curr_direction]
+        def is_valid_position(x: int, y: int) -> bool:
+            return 0 <= x < len(data) and 0 <= y < len(data[0])
 
-        def check_next_pos(start_x, start_y,direction,save_point):
-            (dx,dy) = self.directions[direction]
-            next_x = start_x + 1 * dx
-            next_y = start_y + 1 * dy
-            curr_direction = direction
+        while True:
+            if time.monotonic() - start_time > 0.02:
+                return visited, True
+                
+            x, y = position
+            visited.append([x, y])
+            
+            dx, dy = self.directions[curr_direction]
+            next_x, next_y = x + dx, y + dy
             
             if not is_valid_position(next_x, next_y):
-                return None
-            
-            if data[next_x][next_y] == 'O' and [start_x,start_y] == save_point:
-                return [next_x,next_y],curr_direction,save_point, True
-            
-            if data[next_x][next_y] == 'O' and save_point == []:
-                save_point = [start_x,start_y]
-
-            if data[next_x][next_y] == '#' or data[next_x][next_y] == 'O':
-                curr_direction = turn_right(curr_direction)
-                return [start_x,start_y],curr_direction,save_point,False
-
-            return [next_x,next_y],curr_direction,save_point,False
-        
-        start_time = time.monotonic()
-        while True:
-            try:
-                position,curr_direction,save_point,isLoop = check_next_pos(position[0],position[1],curr_direction,save_point)
-                visited.append(position)
-                if isLoop:
-                    break
-                end_time = time.monotonic()
-                elapsed_time = end_time - start_time
-                if elapsed_time > 0.02:
-                    isLoop = True
-                    break
+                return visited, False
                 
-            except TypeError:
-                break
+            if data[next_x][next_y] == 'O':
+                if [x, y] == save_point:
+                    return visited, True
+                if not save_point:
+                    save_point = [x, y]
+                    
+            if data[next_x][next_y] in '#O':
+                curr_direction = self.next_direction[curr_direction]
+                continue
+                
+            position = [next_x, next_y]
 
-        return list(map(list, dict.fromkeys(map(tuple,visited)))), isLoop
-
-
-    def solve_part1(self, data: Any) -> Union[int, str]:
-        visited = AoCSolver.find_path(self, data)
-        #print(visited)
-        return len(visited)
+    def solve_part1(self, data: List[List[str]]) -> int:
+        visited, _ = self.find_path(data)
+        return len(list({tuple(x) for x in visited}))
     
         raise NotImplementedError("Part 1 solution not implemented")
 
 
     def solve_part2(self, data: Any) -> Union[int, str]:
-        cnt = 0
-        possible_locations,_ = AoCSolver.find_path(self, data)
-        position,_ = AoCSolver.find_starting_point_and_direction(self, data)
-        possible_locations.remove(position)
+        visited, _ = self.find_path(data)
+        start_pos, _ = self.find_starting_point_and_direction(data)
+        visited_unique = list({tuple(x) for x in visited})
+        visited_unique.remove(tuple(start_pos))
         
-        for location in possible_locations:
-            new_data = list(map(list,data))
-            new_data[location[0]][location[1]] = "O"
-            _,isLoop = AoCSolver.find_path(self, new_data)
-            
-            if isLoop:
-                cnt +=1 
-
-        return cnt
+        count = 0
+        for x, y in visited_unique:
+            new_data = [row[:] for row in data]
+            new_data[x][y] = 'O'
+            _, is_loop = self.find_path(new_data)
+            if is_loop:
+                count += 1
+        return count
         raise NotImplementedError("Part 2 solution not implemented")
 
 
