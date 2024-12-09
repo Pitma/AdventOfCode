@@ -105,11 +105,7 @@ class AoCSolver:
                         break
                         
                 if new_pos != -1:
-                    for i in range(old_pos, old_pos + length):
-                        result[i] = '.'
-                        
-                    for i in range(length):
-                        result[new_pos + i] = int(num)
+                    result[new_pos:new_pos + length], result[old_pos:old_pos + length] = [int(num)] * length, ['.'] * length
                         
             return result
         
