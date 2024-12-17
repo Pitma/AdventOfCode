@@ -13,7 +13,7 @@ with open(".token") as token:
 
 # Function to get current time EST
 def est_now() -> datetime:
-    return datetime.now(tz=utc).astimezone(timezone("US/Eastern"))
+    return datetime.now(tz=utc).astimezone(timezone("Europe/Berlin"))
 
 
 # Get current year, day (adding 3 hours for those running it before 12EST)
