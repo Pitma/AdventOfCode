@@ -29,7 +29,7 @@ with open(f"{year}/day{day}/day{day}.py", "w") as f, open("template.py") as temp
 
 # Wait for midnight EST
 now = est_now()
-while now.hour != 0:
+while now.hour != 8:
     print(now)
     time.sleep(0.5)
     now = est_now()
