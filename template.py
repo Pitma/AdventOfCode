@@ -33,6 +33,13 @@ class AoCSolver:
         # return [[c for c in line] for line in input_str.split('\n')]
         return input_str
 
+    @staticmethod
+    def print_grid(grid):
+        for row in grid:
+            print(' '.join(row))
+
+        print("="*100)
+
     def solve_part1(self, data: Any) -> Union[int, str]:
         """Solve part 1 of the puzzle."""
         raise NotImplementedError("Part 1 solution not implemented")
