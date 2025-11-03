@@ -12,8 +12,6 @@ else:
 file_data = file.read()
 
 numbers = re.findall('-?\d+',file_data)
-#fiel_pattern = re.compile(r'\[[^\[]*red.*?\][^\]]|\{[^\{]*red.\}[^\}]')
-#print(fiel_pattern.sub('',file_data))
 def solvePartI(numbers): 
     result = 0
     for number in numbers:
@@ -21,23 +19,31 @@ def solvePartI(numbers):
     return result
 
 def filter_json(obj):
-    #print(obj)
     if isinstance(obj, list):
+        #print("----LOS Gehts Array-----")
         filtered_list = []
-        for item in (filter_json(item) for item in obj):
-            print("ITEM",item)
-            if "red" not in str(item):
+        for item in obj:
+            if isinstance (item, (dict, list)):
+                #print(item, "ist Verschachtelt")
+                filtered_list.append(filter_json(item))
+            else:
                 filtered_list.append(item)
         return filtered_list
     elif isinstance(obj, dict):
+        #print("----LOS Gehts Objekt-----")
         filtered_dict = {}
         for key, value in obj.items():
-            print("VALUE",value)
-            if "red" not in str(value):
+            if isinstance(value, (dict, list)):
+                #print(value, "ist verschachtelt")
                 filtered_dict[key] = filter_json(value)
+            elif "red" in str(value):
+                filtered_dict = {}
+                return filtered_dict
+            else:
+                #print(value,"ist normal")
+                filtered_dict[key] = value
         return filtered_dict
-    else:
-        return obj
+
 
 def process_json_txt_file(input_file):
     with open(input_file, 'r') as infile:
@@ -53,19 +59,19 @@ def process_json_txt_file(input_file):
 
     filtered_data = filter_json(data)
     filtered_json_string = json.dumps(filtered_data, indent=2)
-    print(filtered_json_string)
     return filtered_json_string
     
-def solvePartII(numbers): 
-    #filter all parts with "red"
-    print(process_json_txt_file("input.txt"))
-    #redo part1
+def solvePartII(): 
+    processd = process_json_txt_file(file.name)
+    with open("processed_input.txt", 'w') as outfile:
+        outfile.write(processd)
+    numbers = re.findall('-?\d+',processd)
+    result = 0
+    for number in numbers:
+        result += int(number)
+    print("Ergebnis II",result)
     print("done")
 
 print("Ergebnis I",solvePartI(numbers))
-print("Ergebnis II",solvePartII(numbers))
-
-
-
-
+solvePartII()
 

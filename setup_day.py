@@ -28,11 +28,11 @@ with open(f"{year}/day{day}/day{day}.py", "w") as f, open("template.py") as temp
     f.write(template.read().replace("{{year}}", year).replace("{{day}}", day))
 
 # Wait for midnight EST
-now = est_now()
-while now.hour != 8:
-    print(now)
-    time.sleep(0.5)
-    now = est_now()
+# now = est_now()
+# while now.hour != 7:
+#     print(now)
+#     time.sleep(0.5)
+#     now = est_now()
 
 # 12:00 AM EST!
 print("Advent of Code started!")
