@@ -77,11 +77,10 @@ class AoCSolver:
                 if index > len(array) - 1:
                     index = 0
                 if index == 0:
-                    print(index, value)
+                    #print(index, value)
                     cnt += 1
                     #print("HERE-----------")
-
-                      
+ 
         return cnt      
         """Solve part 2 of the puzzle."""
         raise NotImplementedError("Part 2 solution not implemented")
