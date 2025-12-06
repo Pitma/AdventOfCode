@@ -67,31 +67,21 @@ class AoCSolver:
         check_data = [line for line in data.split('\n')]
         max_len = check_data[0]
         new_data = data.split('\n')
-        print("new_data:", new_data)
         data = []
-        #print("check_data:", check_data)
         for i in range(len(check_data[0])):
             tmp_op = ''
             tmp_list = ''
             for j in range(len(max_len)):
-                #print(new_data[j][i])
                 try:    
                         if new_data[j][i] != '*' and new_data[j][i] != '+':
                             tmp_op += new_data[j][i]
                 except:
                         continue
             tmp_list +=tmp_op
-            #print("tmp_list:", tmp_list)
             data.append(tmp_list)
-        print("data:", data)
-        """ group_size = 0
-        for item in data:
-            if item.strip() == '':
-                break
-            group_size += 1 """
+            
         grouped_data = []
         current_group = []
-        cleaned_data = [item.strip() for item in data if item.strip() != '']
         for item in data:
 
             cleaned_item_for_check = item.strip()
@@ -104,47 +94,19 @@ class AoCSolver:
                 current_group.append(cleaned_number_str)
         if current_group:
             grouped_data.append(current_group)
-
-        print("grouped_data:", grouped_data)
-        print("cleaned_data:", cleaned_data)
-        final_data = []   
+ 
         operators = new_data[-1].replace(' ', '')
         for m in range(len(grouped_data)):
             grouped_data[m].append(operators[m].replace(' ', ''))
-
-        print("final grouped_data:", grouped_data)
-        """ raise NotImplementedError("Part 2 solution not implemented")
-        operations =[]
-        new_operations = []
-        for i in range(len(data[0])):
-                operations.append([line[i] for line in data])
-        result = 0
-        print(operations)
-        for op in operations:
-            max_len = max(op,key=len)
-            tmp_list = []
-            for p in range(len(max_len)):
-                tmp_op = ''
-                for i in range(len(op)-1):
-                    try:
-                        tmp_op += op[i][p]
-                    except:
-                        continue
-                tmp_list.append(tmp_op)
-            tmp_list.append(op[-1])
-            new_operations.append(tmp_list)
-          """
         result = 0     
         for op in grouped_data:
                 math = ''
                 for i in range(len(op)-2):
                     math = math + ' ' + op[i] + ' ' + op[len(op)-1] 
                 math = math + ' ' + op[len(op)-2]
-                #print(math)
                 result += eval(math)
-                #print("result:", eval(math))
-        if result < 23177300295750:
-            return result 
+
+        return result 
         raise NotImplementedError("Part 2 solution not implemented")
 
     def solve(self, input_str: str) -> Union[int, str]:
